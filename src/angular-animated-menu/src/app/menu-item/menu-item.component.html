@@ -1,0 +1,4 @@
+<div *ngIf="menuItem" class="menu-item">
+  <div class="menu-link">{{menuItem.title}}</div>
+  <div class="menu-more" *ngIf="menuItem.items?.length > 0" (click)="onMoreClicked(menuItem)">></div>
+</div>
