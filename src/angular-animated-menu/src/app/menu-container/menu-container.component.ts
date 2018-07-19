@@ -7,13 +7,22 @@ import { MenuItemModel } from '../models/menu-item.model';
   styleUrls: ['./menu-container.component.scss']
 })
 export class MenuContainerComponent implements OnInit {
-  public topLevelMenuItem: MenuItemModel;
+  private _menuItemStack: MenuItemModel[] = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     const menuJson: MenuItemModel = this.getJson('website-side-menu.data.json');
-    this.topLevelMenuItem = menuJson;
+    this._menuItemStack.push(menuJson);
+  }
+
+  get canGoBack(): boolean {
+    return this._menuItemStack.length > 1;
+  }
+
+  get currentMenuItem(): MenuItemModel {
+    const lastItem = this._menuItemStack.slice(-1)[0];
+    return lastItem;
   }
 
   private getJson(fileName: string) {
@@ -26,7 +35,12 @@ export class MenuContainerComponent implements OnInit {
     return JSON.parse(ajaxRequest.responseText);
   }
 
-  private handleMenuItemClicked(clickedMenuItem: MenuItemModel) {
-      console.log(`${clickedMenuItem.title} was clicked`);
+  private goForward(clickedMenuItem: MenuItemModel) {
+    console.log(`${clickedMenuItem.title} was clicked`);
+    this._menuItemStack.push(clickedMenuItem);
+  }
+
+  private goBack() {
+    this._menuItemStack.pop();
   }
 }
