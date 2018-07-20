@@ -7,14 +7,20 @@ import { MenuItemModel } from '../menu-item.model';
   styleUrls: ['./menu-page.component.scss']
 })
 export class MenuPageComponent implements OnInit {
-  @Input() menuItems: MenuItemModel[] = [];
+  @Input() menuItem: MenuItemModel;
+  @Input() isBackEnabled: boolean;
   @Output() menuMoreClicked = new EventEmitter<MenuItemModel>();
+  @Output() menuBackClicked = new EventEmitter();
 
   constructor() {}
 
   ngOnInit() {}
 
-  public raiseMenuMoreClicked(menuItemClicked: MenuItemModel) {
+  private raiseMenuMoreClicked(menuItemClicked: MenuItemModel): void {
     this.menuMoreClicked.emit(menuItemClicked);
+  }
+
+  private raiseMenuBackClicked(): void {
+    this.menuBackClicked.emit();
   }
 }

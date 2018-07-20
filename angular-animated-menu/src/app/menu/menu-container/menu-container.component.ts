@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuItemModel } from '../menu-item.model';
+import { MenuPageComponent } from '../menu-page/menu-page.component';
 
 @Component({
   selector: 'app-menu-container',
@@ -35,12 +36,12 @@ export class MenuContainerComponent implements OnInit {
     return JSON.parse(ajaxRequest.responseText);
   }
 
-  private goForward(clickedMenuItem: MenuItemModel) {
+  private goForward(clickedMenuItem: MenuItemModel): void {
     console.log(`${clickedMenuItem.title} was clicked`);
     this._menuItemStack.push(clickedMenuItem);
   }
 
-  private goBack() {
+  private goBack(): void {
     this._menuItemStack.pop();
   }
 }

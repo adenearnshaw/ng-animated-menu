@@ -1,6 +1,10 @@
 <div class="menu-page">
+        <div class="menu-header">
+                <div class="menu-back-button" *ngIf="isBackEnabled" (click)="raiseMenuBackClicked()">&lsaquo;</div>
+                <div class="menu-title">{{menuItem.title}}</div>
+            </div>
     <ul>
-        <li *ngFor="let item of menuItems">
+        <li *ngFor="let item of menuItem.items">
             <app-menu-item [menuItem]="item" (menuMoreClicked)="raiseMenuMoreClicked($event)"></app-menu-item>
         </li>
     </ul>
