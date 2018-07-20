@@ -3,21 +3,18 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { MenuContainerComponent } from './menu-container/menu-container.component';
-import { MenuItemComponent } from './menu-item/menu-item.component';
-import { MenuPageComponent } from './menu-page/menu-page.component';
+import { MenuModule } from './menu/menu.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MenuContainerComponent,
-    MenuItemComponent,
-    MenuPageComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    MenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

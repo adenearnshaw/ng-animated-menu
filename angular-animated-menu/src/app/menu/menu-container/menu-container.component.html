@@ -1,0 +1,9 @@
+<div class="menu-container" *ngIf="currentMenuItem">
+    <div class="menu-header">
+        <div class="menu-back-button" *ngIf="canGoBack" (click)="goBack()">&lsaquo;</div>
+        <div class="menu-title">{{currentMenuItem.title}}</div>
+    </div>
+    <div class="page-container" animate-element>
+        <app-menu-page [menuItems]="currentMenuItem.items" (menuMoreClicked)="goForward($event)"></app-menu-page>
+    </div>
+</div>

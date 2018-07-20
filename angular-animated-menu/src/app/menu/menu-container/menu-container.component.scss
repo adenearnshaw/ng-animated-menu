@@ -1,7 +1,8 @@
 .menu-container{
-        background-color: black;
+        background-color: white;
         color: white;
         width: 270px;
+        position: relative;
 
     .menu-header {
         position: relative;
@@ -22,6 +23,18 @@
             flex-grow:1;
             padding: 15px 10px;
             text-align: center;
+        }
+    }
+
+    .page-container {
+        position: absolute;
+        width: 100%;
+        left: 270px;
+        transition: all 0.4s ease-out;
+
+
+        &.animate{
+            left: 0;
         }
     }
 }
