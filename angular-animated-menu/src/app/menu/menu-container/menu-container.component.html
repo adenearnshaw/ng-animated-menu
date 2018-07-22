@@ -1,9 +1,5 @@
-<div class="menu-container" *ngIf="currentMenuItem">
-
-    <div class="page-container" animate-element>
-        <app-menu-page [menuItem]="currentMenuItem"
-                       [isBackEnabled]="canGoBack"
-                        (menuMoreClicked)="goForward($event)"
-                        (menuBackClicked)="goBack()"></app-menu-page>
+<div class="menu-container">
+    <div class="page-container" >
+        <ng-template menu-page-host></ng-template>
     </div>
 </div>

@@ -1,5 +1,8 @@
-.menu-page {
+:host{
+    display: block;
+}
 
+.menu-page {
     .menu-header {
         position: relative;
         background-color: rgb(58, 57, 57);
