@@ -1,28 +1,31 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate, group } from "@angular/animations";
 
-import { MenuItemModel } from '../menu-item.model';
+import { MenuItemModel } from '../models/menu-item.model';
 
 @Component({
-  selector: 'app-menu-page',
-  templateUrl: './menu-page.component.html',
-  styleUrls: ['./menu-page.component.scss']
+    selector: 'app-menu-page',
+    templateUrl: './menu-page.component.html',
+    styleUrls: ['./menu-page.component.scss']
 })
 export class MenuPageComponent implements OnInit {
-  @Input() menuItem: MenuItemModel;
-  @Input() isBackEnabled: boolean;
-  @Output() menuMoreClicked = new EventEmitter<MenuItemModel>();
-  @Output() menuBackClicked = new EventEmitter();
+    @Input() menuItem: MenuItemModel;
+    @Input() isBackEnabled: boolean;
+    @Output() menuMoreClicked = new EventEmitter<MenuItemModel>();
+    @Output() menuBackClicked = new EventEmitter();
 
-  constructor() {}
+    constructor() {}
 
-  ngOnInit() {}
+    ngOnInit() {
+        if (this.isBackEnabled === undefined) {
+            this.isBackEnabled = this.menuItem.isTopLevel ? !this.menuItem.isTopLevel : true;
+        }
+    }
 
-  private raiseMenuMoreClicked(menuItemClicked: MenuItemModel): void {
-    this.menuMoreClicked.emit(menuItemClicked);
-  }
+    private raiseMenuMoreClicked(menuItemClicked: MenuItemModel): void {
+        this.menuMoreClicked.emit(menuItemClicked);
+    }
 
-  private raiseMenuBackClicked(): void {
-    this.menuBackClicked.emit();
-  }
+    private raiseMenuBackClicked(): void {
+        this.menuBackClicked.emit();
+    }
 }

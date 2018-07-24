@@ -1,5 +1,11 @@
 <div class="menu-container">
-    <div class="page-container" >
-        <ng-template menu-page-host></ng-template>
+    <div class="pages-list"
+         [style.width]="pageListWidth"
+         [style.left]="pageListOffset">
+        <div class="page" *ngFor="let menuItem of menuItems">
+            <app-menu-page [menuItem]="menuItem"
+                           (menuMoreClicked)="goForward($event)"
+                           (menuBackClicked)="goBack()"></app-menu-page>
+    </div>
     </div>
 </div>
