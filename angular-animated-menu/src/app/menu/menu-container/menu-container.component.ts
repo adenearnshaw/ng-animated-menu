@@ -38,6 +38,11 @@ export class MenuContainerComponent implements OnInit {
         return `left ${this._animationDuration}ms`;
     }
 
+    public resetMenu():void{
+        this._menuItemStack.splice(1, this._menuItemStack.length -1);
+        this._pageListOffset = 0;
+    }
+
     private getJson(fileName: string) {
         // not bothering with Async, as it's local.
         const ajaxRequest = new XMLHttpRequest();

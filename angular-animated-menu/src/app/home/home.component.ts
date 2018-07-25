@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
+import { MenuContainerComponent } from "../menu/menu-container/menu-container.component";
 
 @Component({
     selector: "app-home",
@@ -19,6 +20,8 @@ import { trigger, state, style, transition, animate } from "@angular/animations"
     ]
 })
 export class HomeComponent implements OnInit {
+    @ViewChild('menuContainer') menuContainer: MenuContainerComponent;
+
     public isMenuOpen = false;
 
     get currentMenuState(): string{
@@ -31,5 +34,11 @@ export class HomeComponent implements OnInit {
 
     public toggleMenu(): void {
         this.isMenuOpen = !this.isMenuOpen;
+    }
+
+    public menuCloseAnimationComplete(event: AnimationEvent){
+        if (!this.isMenuOpen){
+            this.menuContainer.resetMenu();
+        }
     }
 }

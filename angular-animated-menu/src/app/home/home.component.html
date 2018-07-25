@@ -13,4 +13,6 @@
         <p>Here is a small demo app to present a way to show a side menu on-screen complete with animations on show and beteen elements.</p>
     </div>
 </div>
-<app-menu-container [@slideInOut]="currentMenuState"></app-menu-container>
+<app-menu-container #menuContainer
+                    [@slideInOut]="currentMenuState"
+                    (@slideInOut.done)="menuCloseAnimationComplete()"></app-menu-container>
