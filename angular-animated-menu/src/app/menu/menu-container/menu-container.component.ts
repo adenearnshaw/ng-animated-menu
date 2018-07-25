@@ -55,6 +55,7 @@ export class MenuContainerComponent implements OnInit {
     private goBack(): void {
         this._pageListOffset += this._menuWidth;
 
-        setTimeout(() => this._menuItemStack.pop(), 310);
+        const timeout = this._animationDuration + 10; // Allow some leeway for animation to complete
+        setTimeout(() => this._menuItemStack.pop(), timeout);
     }
 }
