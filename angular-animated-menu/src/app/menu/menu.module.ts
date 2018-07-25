@@ -5,7 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { MenuContainerComponent } from './menu-container/menu-container.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuPageComponent } from './menu-page/menu-page.component';
-import { MenuPageHostDirective } from './menu-page-host/menu-page-host.directive';
 
 @NgModule({
   imports: [
@@ -15,13 +14,12 @@ import { MenuPageHostDirective } from './menu-page-host/menu-page-host.directive
   declarations: [
       MenuContainerComponent,
       MenuItemComponent,
-      MenuPageComponent,
-      MenuPageHostDirective
+      MenuPageComponent
   ],
-  exports:[
+  exports: [
       MenuContainerComponent
   ],
-  entryComponents:[
+  entryComponents: [
       MenuPageComponent
   ]
 })

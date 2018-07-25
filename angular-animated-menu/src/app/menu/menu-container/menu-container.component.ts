@@ -1,90 +1,61 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver } from "@angular/core";
-import { trigger, state, style, transition, animate, group } from "@angular/animations";
+import { Component, OnInit } from '@angular/core';
 
-import { MenuItemModel } from "../menu-item.model";
-import { MenuPageComponent } from "../menu-page/menu-page.component";
-import { MenuPageHostDirective } from "../menu-page-host/menu-page-host.directive";
+import { MenuItemModel } from '../models/menu-item.model';
 
 @Component({
-    selector: "app-menu-container",
-    templateUrl: "./menu-container.component.html",
-    styleUrls: ["./menu-container.component.scss"],
-    animations:[
-      trigger('enterAnim', [
-          transition(':enter', [
-            style({transform: 'translateX(100%)'}),
-            animate(350)
-          ]),
-          transition(':leave', [
-            group([
-              animate('0.2s ease', style({
-                transform: 'translate(150px,25px)'
-              })),
-              animate('0.5s 0.2s ease', style({
-                opacity: 0
-              }))
-            ])
-          ])
-        ])
-    ]
+    selector: 'app-menu-container',
+    templateUrl: './menu-container.component.html',
+    styleUrls: ['./menu-container.component.scss']
 })
 export class MenuContainerComponent implements OnInit {
+    // If changing the width or duration, change the corresponding
+    // variables in the related sass file too.
+    private readonly _menuWidth = 270;
+    private readonly _animationDuration = 300;
     private _menuItemStack: MenuItemModel[] = [];
-    @ViewChild(MenuPageHostDirective) pageHost: MenuPageHostDirective;
+    private _pageListOffset = 0;
 
-    constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor() {}
 
     ngOnInit() {
-        const menuJson: MenuItemModel = this.getJson("website-side-menu.data.json"  );
+        const menuJson: MenuItemModel = this.getJson('website-side-menu.data.json');
         this._menuItemStack.push(menuJson);
-        this.loadPageComponent();
     }
 
-    get canGoBack(): boolean {
-        return this._menuItemStack.length > 1;
+    get menuItems(): MenuItemModel[] {
+        return this._menuItemStack;
     }
 
-    get currentMenuItem(): MenuItemModel {
-        const lastItem = this._menuItemStack.slice(-1)[0];
-        return lastItem;
+    get pageListWidth(): string {
+        return this._menuItemStack.length * this._menuWidth + 'px';
     }
 
-    private loadPageComponent() {
-        const componentFactory = this._componentFactoryResolver.resolveComponentFactory(MenuPageComponent);
-        const viewContainerRef = this.pageHost.viewContainerRef;
-        //viewContainerRef.clear();
+    get pageListOffset(): string {
+        return this._pageListOffset + 'px';
+    }
 
-        viewContainerRef.remove(0);
-        const componentRef = viewContainerRef.createComponent(componentFactory);
-
-        const component = <MenuPageComponent>componentRef.instance;
-        component.menuItem = this.currentMenuItem;
-        component.isBackEnabled = this.canGoBack;
-        component.menuMoreClicked.subscribe(item => {
-            this.goForward(item);
-        });
-        component.menuBackClicked.subscribe(() => {
-            this.goBack();
-        });
+    get pageListAnimation(): string {
+        return `left ${this._animationDuration}ms`;
     }
 
     private getJson(fileName: string) {
         // not bothering with Async, as it's local.
         const ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.overrideMimeType("application/json");
-        ajaxRequest.open("GET", "/assets/" + fileName, false);
+        ajaxRequest.overrideMimeType('application/json');
+        ajaxRequest.open('GET', '/assets/' + fileName, false);
         ajaxRequest.send(null);
-
         return JSON.parse(ajaxRequest.responseText);
     }
 
     private goForward(clickedMenuItem: MenuItemModel): void {
         this._menuItemStack.push(clickedMenuItem);
-        this.loadPageComponent();
+        this._pageListOffset -= this._menuWidth;
     }
 
     private goBack(): void {
-        this._menuItemStack.pop();
-        this.loadPageComponent();
+        this._pageListOffset += this._menuWidth;
+
+        const timeout = this._animationDuration + 10; // Allow some leeway for animation to complete
+        setTimeout(() => this._menuItemStack.pop(), timeout);
     }
 }
