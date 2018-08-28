@@ -34,10 +34,6 @@ export class MenuContainerComponent implements OnInit {
         return this._pageListOffset + 'px';
     }
 
-    get pageListAnimation(): string {
-        return `left ${this._animationDuration}ms`;
-    }
-
     public resetMenu():void{
         this._menuItemStack.splice(1, this._menuItemStack.length -1);
         this._pageListOffset = 0;
